@@ -3,4 +3,6 @@ files:
     ignore:
       - /docs/DE
       - /docs/DA
+      - /docs/ja
+      - /docs/ru
     translation: /**/%two_letters_code%/**/%original_file_name%
