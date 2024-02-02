@@ -4,4 +4,5 @@ files:
       - /docs/DE
       - /docs/RU
       - /docs/JA
+      - /docs/da
     translation: /docs/%two_letters_code%/%original_path%/%original_file_name%
