@@ -1,0 +1,7 @@
+files:
+  - source: /docs/EN/**/*.html
+    ignore:
+      - /docs/DE
+      - /docs/RU
+      - /docs/JA
+    translation: /docs/%two_letters_code%/%original_path%/%original_file_name%
