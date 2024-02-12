@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>CKEditor</title>
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/decoupled-document/ckeditor.js"></script>
+  </head>
+  <body>
+    <h1>Read, edit and save file example</h1>
+    <button type="button" id="select-error-file">Select Error File</button>
+    <button type="button" id="save-error-file">Save Error File</button>
+    <br /><br />
+    <div id="toolbar-container"></div>
+    <div id="editor" style="border: 1px dotted rgb(100, 172, 231); min-height: 400px; font-family: Arial, Helvetica, sans-serif"></div>
+    <script>
+      handleAfterInit = (editor) => {
+        window.editor = editor;
+        const toolbarContainer = document.querySelector("#toolbar-container");
+        toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+      };
+
+      let fileHandler;
+      document.querySelector("#select-error-file").addEventListener("click", async () => {
+        [fileHandler] = await window.showOpenFilePicker(pickerOpts);
+        const file = await fileHandler.getFile();
+        const content = await file.text();
+        window.editor.setData(content);
+      });
+
+      document.querySelector("#save-error-file").addEventListener("click", async () => {
+        const content = '<?xml version="1.0" encoding="utf-8"?><html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"><head></head><body>' + window.editor.getData() + "</body></html>";
+        const writable = await fileHandler.createWritable();
+        await writable.write(content);
+        await writable.close();
+      });
+
+      const pickerOpts = { types: [{ description: "HTML Document", accept: { "text/html": [".html", ".htm"] } }], excludeAcceptAllOption: true, multiple: false };
+      DecoupledEditor.create(document.querySelector("#editor")).then(handleAfterInit).catch(console.error);
+    </script>
+  </body>
+</html>
